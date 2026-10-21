@@ -6,9 +6,9 @@ class TestEnvVaultGuard(unittest.TestCase):
     def test_env_parser(self):
         text = """
         # Comment line
-        DATABASE_URL=postgres://localhost/db
+        export DATABASE_URL=postgres://localhost/db
         API_KEY="my-secret-key"
-        DEBUG=false
+        DEBUG=false # inline comment
         """
         data = EnvParser.parse_text(text)
         self.assertEqual(data["DATABASE_URL"], "postgres://localhost/db")

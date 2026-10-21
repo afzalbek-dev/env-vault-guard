@@ -46,7 +46,11 @@ class EnvCrypto:
 
     @classmethod
     def decrypt(cls, payload_b64: str, passphrase: str) -> str:
-        payload = base64.b64decode(payload_b64.encode("utf-8"))
+        try:
+            payload = base64.b64decode(payload_b64.encode("utf-8"))
+        except Exception as e:
+            raise ValueError(f"Invalid base64 payload: {e}")
+
         if len(payload) < 64:
             raise ValueError("Invalid encrypted payload size")
 

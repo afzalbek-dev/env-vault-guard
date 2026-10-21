@@ -19,9 +19,16 @@ class EnvParser:
                 key = key.strip()
                 val = val.strip()
 
+                if key.startswith("export "):
+                    key = key[7:].strip()
+
                 # Remove matching surrounding quotes
                 if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
                     val = val[1:-1]
+                else:
+                    # Strip unquoted inline comments
+                    if " #" in val:
+                        val = val.split(" #", 1)[0].strip()
 
                 env_dict[key] = val
         return env_dict
